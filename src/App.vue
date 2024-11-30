@@ -48,20 +48,25 @@ onMounted(() => {
     });
 })
 
-const enableInterAct = ref<boolean>(false);
-const changAct = (enable:boolean)=>{
-    enableInterAct.value = enable;
-}
-
 const drag = ref<any>();
 const interActLock = ref<any>();
 
+const enableInterAct = ref<boolean>(true);
+const changAct = (enable: boolean) => {
+    enableInterAct.value = enable;
+}
+
+const enableShow = ref(true);
+const changeShow = (enable:boolean)=>{
+    enableShow.value = enable;
+}
 </script>
 
 <template>
-    <DragDiv ref="drag" :initPos="{ x: 800, y: 400 }" :size="{ width: areaWidth + 'px', height: areaHeight + 'px' }" :enableInterAct="enableInterAct">
+    <DragDiv ref="drag" @overChange="changeShow" :initPos="{ x: 800, y: 400 }"
+        :size="{ width: areaWidth + 'px', height: areaHeight + 'px' }" :enableInterAct="enableInterAct">
         <template v-slot:lock>
-            <InteractLock ref="interActLock" @lockOnOff="changAct"></InteractLock>
+            <InteractLock v-show="enableShow" ref="interActLock" @lockOnOff="changAct"></InteractLock>
             <canvas ref="pet" :width="areaWidth" :height="areaHeight"></canvas>
         </template>
     </DragDiv>
@@ -71,6 +76,7 @@ const interActLock = ref<any>();
 canvas {
     background-color: transparent;
 }
+
 #debug {
     position: absolute;
     left: 100px;

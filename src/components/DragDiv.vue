@@ -1,6 +1,7 @@
 <template>
-    <div ref="drag" class="draggable" @mouseover="over" @mouseleave="leave" @mousedown="dragStart" @mousemove="dragging" @mouseup="dragEnd"
-    :style="{top: position.y+'px',left:position.x+'px',height:prop.size.height,width:prop.size.width}">
+    <div ref="drag" class="draggable" @mouseover="over" @mouseleave="leave" @mousedown="dragStart" @mousemove="dragging"
+        @mouseup="dragEnd"
+        :style="{ top: position.y + 'px', left: position.x + 'px', height: prop.size.height, width: prop.size.width }">
         <slot name='lock'>
         </slot>
     </div>
@@ -11,24 +12,26 @@ import { reactive, ref } from 'vue';
 import { ipcRenderer } from 'electron';
 
 const prop = defineProps<{
-    initPos:{
-        x:number,
-        y:number
+    initPos: {
+        x: number,
+        y: number
     },
-    size:{
-        width:string,
-        height:string,
+    size: {
+        width: string,
+        height: string,
     },
-    enableInterAct:boolean,
+    enableInterAct: boolean,
 }>();
 
 const drag = ref<any>();
-const position = reactive({x:prop.initPos.x,y:prop.initPos.y})
+const position = reactive({ x: prop.initPos.x, y: prop.initPos.y })
+
+const emit = defineEmits(['overChange']);
 
 defineExpose({
-    pos:()=>{
-        return [position.x,position.y]
-    }
+    pos: () => {
+        return [position.x, position.y]
+    },
 })
 
 let draggingFlag = false; // 是否正在拖拽
@@ -56,13 +59,15 @@ function dragEnd() {
 
 
 const over = () => {
-    if (prop.enableInterAct){
+    emit('overChange',true);
+    if (prop.enableInterAct) {
         ipcRenderer.send('enable-mouse', true);
     }
 }
 
 const leave = () => {
-    if (prop.enableInterAct){
+    emit('overChange',false);
+    if (prop.enableInterAct) {
         ipcRenderer.send('enable-mouse', false);
     }
 }

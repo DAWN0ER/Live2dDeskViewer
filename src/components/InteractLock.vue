@@ -19,7 +19,7 @@
 import { ref } from 'vue';
 import { ipcRenderer } from 'electron';
 
-let lock = ref(false);
+let lock = ref(true);
 const lockdiv = ref<HTMLDivElement>();
 
 const emits = defineEmits(['lockOnOff'])
