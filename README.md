@@ -23,4 +23,4 @@ npm + vite 构建，参考教程 [小满zs](https://space.bilibili.com/99210573)
 
 本人是后端开发，这段时间拿到一个可爱的 live2d 但是没有合适的桌宠软件（steam上面有但是我号被盗了），一怒之下自学 vue 三天怒肝了一个简单的桌面 live2d 展示，思路仅供参考。
 
-![展示](image.png)
+![展示](./image.png)
